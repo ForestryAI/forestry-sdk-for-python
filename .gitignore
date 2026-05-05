@@ -1,0 +1,147 @@
+# Default Assets restore directory
+.assets
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache
+.mypy_cache
+.cache
+
+# Virtual environment
+env*/
+
+# Codespace virtual environment
+pythonenv*/
+
+# PTVS analysis
+.ptvs/
+
+# Coverage report
+**/.coverage*
+_coverage
+
+# Build results
+bin/
+obj/
+dist/
+MANIFEST
+_docs
+
+# Result of running python setup.py install/pip install -e
+RECORD.txt
+build/
+*.egg-info/
+.tox_pip_cache*/
+
+# Test results
+TestResults/
+ENV_DIR/
+.assets/
+
+# Perf test profiling
+cProfile-*.pstats
+
+# tox generated artifacts (see https://tox.wiki/en/4.32.0/)
+test-junit-*.xml
+pylint-*.out.txt
+coverage-*.xml
+stderr.txt
+stdout.txt
+_proxy_log_*.log
+_azci_*.log
+.artifacts
+.tmp_whl_dir
+.logs
+.proxy
+conda/output/
+conda/assembly/
+conda/assembled/
+conda/downloaded/
+conda/conda-env/
+scenario_*.txt
+.wheels
+
+# tox environment folders
+.tox/
+
+# Credentials (TODO: Azure with e.g. AI)
+
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+.vs/
+.vscode/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Mac desktop service store files
+.DS_Store
+
+# Sphinx (see https://www.sphinx-doc.org/en/master/)
+.idea
+src/build
+*.iml
+/doc/_build
+/doc/sphinx/examples
+/doc/sphinx/tests
+/.vs/config/applicationhost.config
+
+# Azure deployment credentials
+*.pubxml
+
+# [begoldsm] ignore virtual env if it exists.
+adlEnv/
+venv*
+.venv*
+code_reports
+
+
+# temp path to to run regression test
+.tmp_code_path/
+
+# env vars
+.env
+
+# local SSL certificate folder
+.certificate
+
+# ignore pre-commit config to avoid adding hooks in this repo as
+# package specific hooks will bring delay and in some cases errors to all developers
+.pre-commit-config.yaml
+
+# api stub files
+*_python.json
+
+# temporary folder to refresh SDK with TypeSpec
+TempTypeSpecFiles/
+
+# temporary folders and files created by running command 'tsp-client install-dependencies'
+node_modules/
+/package-lock.json
+/package.json
+
+# component detection report
+component-detection-pip-report.json
+
+# Eclipse project files
+**/.project
+**/.pydevproject
+**/.settings
+.github/prompts/copilot-instructions.md
+
+# No uv lock for now
+uv.lock
+
+# Sphinx generated documentation
+website/

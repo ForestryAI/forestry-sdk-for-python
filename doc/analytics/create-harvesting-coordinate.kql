@@ -1,0 +1,21 @@
+.create external table HarvestingCoordinate ( 
+      Operation:string,
+      State:string,
+      Version:int,
+      Timestamp:datetime,
+      MachineId:string,
+      StemId:int,
+      Longitude:real,
+      Latitude:real,
+      Altitude:real,
+      Reference:string,
+      Position:string
+    ) 
+    kind=storage 
+    partition by (year:string , month:string, day:string, contract:string)
+    pathformat = ("year="year"/month="month"/day="day"/contract="contract)
+    dataformat=multijson
+    (
+        h@'' 
+    )
+    with (namePrefix  = "harvesting-coordinate") 

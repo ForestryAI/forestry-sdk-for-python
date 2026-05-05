@@ -1,0 +1,30 @@
+.create external table HarvestingStem ( 
+      Operation:string,
+      EntityType:string,
+      State:string,
+      Version:int,
+      Timestamp:datetime,
+      Contract:string,
+      MachineId:string,
+      MachineNumber:int,
+      StemId:int,
+      StemNumber:int,
+      TreeKind:int,
+      BreastHeightDiameter:int,
+      BreastHeightDiameterClass:int,
+      Length:int,
+      Volume:real,
+      VolumeWithDecay:real,
+      TopVolume:real,
+      BarkFunction:string,
+      Longitude:real,
+      Latitude:real
+    ) 
+    kind=storage 
+    partition by (year:string , month:string, day:string, contract:string)
+    pathformat = ("year="year"/month="month"/day="day"/contract="contract)
+    dataformat=multijson
+    (
+        h@'' 
+    )
+    with (namePrefix  = "harvesting-stem") 

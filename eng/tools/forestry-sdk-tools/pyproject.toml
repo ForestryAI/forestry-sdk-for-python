@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "forestry-sdk-tools"
+version = "0.0.0"
+description = "Build and test tooling for the Forestry SDK for Python"
+readme = "README.md"
+
+dependencies = [
+    "wheel",
+    "pytest>=3.5.1",
+    "pytest-cov",
+    "python-dotenv"
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["tests*", "build*"]

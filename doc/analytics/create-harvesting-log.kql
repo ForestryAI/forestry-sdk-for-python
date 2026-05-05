@@ -1,0 +1,35 @@
+.create external table HarvestingLog ( 
+      Operation:string,
+      EntityType:string,
+      State:string,
+      Version:int,
+      Timestamp:datetime,
+      Contract:string,
+      MachineId:string,
+      MachineNumber:int,
+      DriverId:string,
+      AgreementId:string,
+      BuyerId:string,
+      SellerId:string,
+      ProductId:string,
+      ProductName:string,
+      ProductCategory:string,
+      StemId:int,
+      SequenceNumber:int,
+      SmallEndUnderBarkDiameter:int,
+      SmallEndUnderBarkDiameterClass:int,      
+      Length:int,
+      LengthClass:int,
+      VolumeUnderBack:real,
+      TopVolumeUnderBack:real,
+      ProcessingType:string,
+      CuttingType:string
+    ) 
+    kind=storage 
+    partition by (year:string , month:string, day:string, contract:string)
+    pathformat = ("year="year"/month="month"/day="day"/contract="contract)
+    dataformat=multijson
+    (
+        h@'' 
+    )
+    with (namePrefix  = "harvesting-log") 

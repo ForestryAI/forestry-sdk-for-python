@@ -1,0 +1,39 @@
+[project] 
+name = "forestry-ai-chat" 
+version = "0.1.0" 
+description = "Forestry AI Chat" 
+readme = "README.md" 
+
+dependencies = [ 
+]
+
+[project.optional-dependencies] 
+dev = [ 
+    "forestry-sdk-tools @ file:../../../eng/tools/forestry-sdk-tools" 
+]
+
+
+# Forestry tooling
+[tool.forestry] 
+changelog = "CHANGELOG.md"
+
+
+# Azure tooling
+[tool.azure-sdk-build]
+mypy = true
+type_check_samples = true
+verifytypes = true
+pyright = false
+black = true
+
+[[tool.azure-sdk-build.optional]]
+name = "no_requests"
+install = []
+uninstall = ["requests"]
+additional_pytest_args = ["--ignore-glob='*_async.py'"]
+
+[[tool.azure-sdk-build.optional]]
+name = "no_aiohttp"
+install = []
+uninstall = ["aiohttp"]
+additional_pytest_args = ["-k", "_async.py"]

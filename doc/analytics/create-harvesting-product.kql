@@ -1,0 +1,31 @@
+.create external table HarvestingProduct ( 
+      Operation:string,
+      State:string,
+      Version:int,
+      Timestamp:datetime,
+      MachineId:string,      
+      AgreementId:string,
+      InstructionId:string,
+      InstructionVersion:string,
+      ProductCategoryId:string,
+      ProductId:string,
+      ProductVersion:int,
+      AgreementSite:string,
+      TransportationSite:string,
+      Weight:real,
+      DryWeight:real,
+      Energy:real,
+      Volume:real,
+      ReportedVolume:real,
+      ChangedVolume:real,
+      TopVolumeUnderBark:real,
+      LogCount:int
+    ) 
+    kind=storage 
+    partition by (year:string , month:string, day:string, contract:string)
+    pathformat = ("year="year"/month="month"/day="day"/contract="contract)
+    dataformat=multijson
+    (
+        h@'' 
+    )
+    with (namePrefix  = "harvesting-product") 

@@ -1,0 +1,21 @@
+[project] 
+name = "forestry-ai-customer" 
+version = "0.1.0" 
+description = "Forestry AI customer" 
+readme = "README.md" 
+
+dependencies = [ 
+]
+
+[project.optional-dependencies] 
+dev = [ 
+    "forestry-sdk-tools @ file:../../../eng/tools/forestry-sdk-tools" 
+]
+
+# Forestry tooling
+[tool.forestry] 
+changelog = "CHANGELOG.md"
+
+# Azure tooling
+[tool.azure-sdk-build]
+whl_no_aio= false
