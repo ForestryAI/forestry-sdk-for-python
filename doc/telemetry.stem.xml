@@ -1,0 +1,53 @@
+<Stem>
+      <StemKey>10621000</StemKey>
+      <ObjectKey>27</ObjectKey>
+      <SubObjectKey>27</SubObjectKey>
+      <SpeciesGroupKey>81</SpeciesGroupKey>
+      <OperatorKey>3</OperatorKey>
+      <StemNumber>1611</StemNumber>
+      <ProcessingCategory>MultiTreeProcessing</ProcessingCategory>
+      <StemCoordinates receiverPosition="Base machine position" coordinateReferenceSystem="WGS84">
+        <Latitude latitudeCategory="North">64.3045283</Latitude>
+        <Longitude longitudeCategory="East">18.7812933</Longitude>
+        <Altitude>229</Altitude>
+      </StemCoordinates>
+      <Extension>
+        <HPRCMResults>
+          <StemInfo>
+            <TreeHeight Unit="cm">818.8</TreeHeight>
+            <EstimatedTop Unit="m3sobEstimated">0.00343</EstimatedTop>
+            <EstimatedStem Unit="m3subEstimated">0.01133</EstimatedStem>
+          </StemInfo>
+        </HPRCMResults>
+      </Extension>
+      <StumpTreatment>false</StumpTreatment>
+      <MultiTreeProcessedStem>
+        <StemBunchKey>152</StemBunchKey>
+        <DBH>65</DBH>
+        <ReferenceDiameter referenceDiameterHeight="93">66</ReferenceDiameter>
+        <StemGrade>
+          <GradeValue gradeStartPosition="0">7</GradeValue>
+        </StemGrade>
+        <Log>
+          <LogKey>1</LogKey>
+          <ProductKey>205</ProductKey>
+          <LogVolume logVolumeCategory="m3 (price)" logMeasurementCategory="Machine">0.013</LogVolume>
+          <LogVolume logVolumeCategory="m3sobEstimated" logMeasurementCategory="Machine">0.02</LogVolume>
+          <LogVolume logVolumeCategory="m3subEstimated" logMeasurementCategory="Machine">0.013</LogVolume>
+          <CuttingCategory>
+            <CuttingReason>Other manual</CuttingReason>
+          </CuttingCategory>
+          <TopSawing>false</TopSawing>
+          <FindButtEndFunction>false</FindButtEndFunction>
+          <LogMeasurement logMeasurementCategory="Machine">
+            <LogDiameter logDiameterCategory="Butt ob">86</LogDiameter>
+            <LogDiameter logDiameterCategory="Butt ub">56</LogDiameter>
+            <LogDiameter logDiameterCategory="Mid ob">56</LogDiameter>
+            <LogDiameter logDiameterCategory="Mid ub">44</LogDiameter>
+            <LogDiameter logDiameterCategory="Top ob">34</LogDiameter>
+            <LogDiameter logDiameterCategory="Top ub">27</LogDiameter>
+            <LogLength>495</LogLength>
+          </LogMeasurement>
+        </Log>
+      </MultiTreeProcessedStem>
+    </Stem>

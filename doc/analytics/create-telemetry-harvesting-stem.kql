@@ -20,11 +20,17 @@
       Longitude:real,
       Latitude:real
     ) 
-    kind=storage 
-    partition by (year:string , month:string, day:string, contract:string)
-    pathformat = ("year="year"/month="month"/day="day"/contract="contract)
+    kind=storage
+    // Volumes by day is low and excluded from partitioning
+    partition by (
+        contract:string,
+        year:int, 
+        month:int,
+        
+    )
+    pathformat=(contract=" contract "/year=" year "/month=" month ")
     dataformat=multijson
     (
         h@'' 
     )
-    with (namePrefix  = "harvesting-stem") 
+    with (namePrefix = "harvesting-stem") 

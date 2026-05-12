@@ -1,0 +1,37 @@
+{
+    "Stamnummer": 5523,
+    "Koordinater": [
+        {
+            "Sn": 56.58915,
+            "Vo": 15.61151,
+            "Altitud": 124.4,
+            "Referens": "WGS84",
+            "Position": "Maskin"
+        },
+        {
+            "Sn": 6271821.0,
+            "Vo": 537556.0,
+            "Altitud": 124.4,
+            "Referens": "SWEREF99",
+            "Position": "Maskin"
+        }
+    ],
+    "Barkfunktion": "SG",
+    "Rotdelsfunktion": "Poikela2007",
+    "Upparbetningstyp": "EB",
+    "Grotanpassning": false,
+    "StamvolymM3Fub": 0.05,
+    "Brosthojdsdiameter": 125,
+    "Brosthojdsdiameterklass": 120,
+    "Stamlengd": 504,
+    "ToppVolymM3Fub": 0.0093,
+    "Topplengd": 525.0,
+    "DiameterSistaKap": 82,
+    "ProduceratHandelssortiment": {
+        "Identitet": "429-1",
+        "Version": 1
+    },
+    "Metpunkter": [],
+    "Forare": "f36568f2-6af2-4",
+    "Tredslag": "2"
+}
