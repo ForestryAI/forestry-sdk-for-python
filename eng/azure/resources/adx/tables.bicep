@@ -6,8 +6,11 @@ param adxDatabaseName string
 
 param forceUpdateTag string = utcNow()
 
+#disable-next-line prefer-interpolation
 var content = concat(
-  loadTextContent('./create-telemetry-harvesting-stem.kql')
+  loadTextContent('./create-telemetry-harvesting-stem.kql'),
+  '\n\n',
+  loadTextContent('./create-telemetry-harvesting-log.kql')
 )
 
 var scriptContent = replace(

@@ -6,6 +6,7 @@
     MachineKey:int,
     StemKey:int,
 
+    StartedTimestamp:datetime,
     CreationTimestamp:datetime,
 
     ProductIdentification:string,
@@ -28,20 +29,9 @@
     BoomPositioningFellingAngle:int,
     BoomPositioningLastLogCutAngle:int
 )
-kind=storage
-
-partition by (    
-    Year:int,
-    Month:int,
-    ContractReference:string
-)
-
-pathformat=(
-    "year=" Year
-    "/month=" Month
-    "/contractReference=" ContractReference
-)
-
+kind=storage  
+partition by (ContractReference:string = ContractReference, Month:datetime = startofmonth(StartedTimestamp))
+pathformat=("contractReference=" ContractReference "/" Month) 
 dataformat=parquet
 (
     h@"__STORAGE_URL__/telemetries;managed_identity=system"

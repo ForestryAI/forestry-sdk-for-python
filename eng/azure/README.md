@@ -18,9 +18,6 @@ $subscriptionName="forestry"
 az account set --subscription $subscriptionName
 ```
 
-## Environments
-Currently the only environment
-
 ## Resource group
 A resource group is created (see Microsoft [information](https://learn.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create)) with the Azure CLI in PowerShell:
 ```
@@ -32,10 +29,15 @@ az group create \
   --location swedencentral
 ```
 
-where the only environment currently is ```poc```.  After the resource group exists then everything else is done by Azure CLI deployment (see Microsoft [information](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-cli?toc=%2Fcli%2Fazure%2Ftoc.json&bc=%2Fcli%2Fazure%2Fbreadcrumb%2Ftoc.json&view=azure-cli-latest)):
+where the only environment currently is ```poc```.  
+
+## Deployment
+Once the resource group exists then everything else is done by Azure CLI deployment (see Microsoft [information](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-cli?toc=%2Fcli%2Fazure%2Ftoc.json&bc=%2Fcli%2Fazure%2Fbreadcrumb%2Ftoc.json&view=azure-cli-latest)):
 ```
 az deployment group create \
   --resource-group $resourceGroup \
   --template-file main.bicep \
-  --parameters environments/dev/main.bicepparam
+  --parameters environments/poc/main.bicepparam
 ```
+
+from this directory.

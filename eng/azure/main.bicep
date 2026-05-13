@@ -37,3 +37,12 @@ module lake './resources/storage/lake.bicep' = {
     adxPrincipalId: adx.outputs.principalId
   }
 }
+
+module externalTables './resources/adx/tables.bicep' = {
+    name: 'externalTables'
+    params: {
+        storageUrl: lake.outputs.storageUrl
+        adxClusterName: adxClusterName
+        adxDatabaseName: adxDatabaseName
+    }
+}

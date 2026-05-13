@@ -15,6 +15,9 @@ resource adxCluster 'Microsoft.Kusto/clusters@2023-08-15' = {
     tier: adxSkuTier
     capacity: adxSkuCapacity
   }
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     enableStreamingIngest: true
   }

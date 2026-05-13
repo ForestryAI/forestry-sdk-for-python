@@ -1,0 +1,40 @@
+.create external table HarvesterLogTelemetry (
+    ContractReference:string,
+    Year:int,
+    Month:int,
+
+    MachineKey:int,
+    StemKey:int,
+    LogKey:int,
+
+    StartedTimestamp:datetime,
+    CreationTimestamp:datetime,
+
+    ProductIdentification:string,
+    ProductName:string,
+
+    VolumeOverBark:real,
+    VolumeUnderBark:real,
+    VolumePrice:real,
+
+    CuttingReason:string,
+
+    TopSawing:bool,
+    FindButtEndFunction:bool,
+
+    DiameterButtOverBark:real,
+    DiameterButtUnderBark:real,
+    DiameterMiddleOverBark:real,
+    DiameterMiddleUnderBark:real,
+    DiameterMiddleHKSOverBark:real,
+    DiameterMiddleHKSUnderBark:real,
+    DiameterTopOverBark:real,
+    DiameterTopUnderBark:real,
+)
+kind=storage
+partition by (ContractReference:string = ContractReference, Month:datetime = startofmonth(StartedTimestamp))
+pathformat=("contractReference=" ContractReference "/" Month) 
+dataformat=parquet
+(
+    h@"__STORAGE_URL__/telemetries;managed_identity=system"
+)
