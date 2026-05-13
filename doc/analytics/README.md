@@ -1,18 +1,35 @@
 # ADX External Tables
 
 An ADX external table represents an entity stored within a shared data lake.  
-Entity paths and partition structures are designed around dominant query constraints and archival requirements.
+Entity paths and partition structures are designed around dominant query constraints and archival requirements.  Entities are grouped into containers inside a single storage account and single ADX database.  Multiple containers gives:
+- clean organization
+- low complexity
+- easy querying
+- future flexibility
 
-Query performance is the primary design concern. For this reason, telemetry data is stored using the Parquet file format rather than JSON or CSV.
+without introducing namespace-routing.  Having seperare container even has infrastructure benefits:
+- migrate telemetry separately
+- replicate analytics elsewhere
+- isolate costs
+- split workloads
 
-ADX table and column names should follow established forestry and logistics standards where possible, including:
+without redesigning paths.  ADX must have access to every container.
+
+Query performance is the primary design concern. For this reason, information is stored using the Parquet file [format](https://parquet.apache.org/docs/) rather than JSON or CSV.  Performance depends on:
+- partition pruning
+- parquet layout
+- file counts
+- file sizes
+- storage latency
+
+ADX tables names must be unique to the ADX database regardless storage settings like distinct storage containers.  ADX table and column names should follow established forestry and logistics standards where possible, including:
 - PapiNet
 - StanForD
 - third-party extensions such as Biometria delivery source definitions
 
 Kusto external tables support composition and reuse through functions and templates, but do not support inheritance, abstract base tables, or enumeration types. Schemas are flat and independent objects.
 
-Partition columns are derived from storage paths rather than blob content. Partition dimensions should therefore reflect the most common query predicates.
+Partition columns are derived from storage paths rather than blob content.  Partitioning is path-based inside the external table, independent of the container.  Partition dimensions should therefore reflect the most common query predicates.
 
 Date dimensions within paths and partitions also support lifecycle operations such as:
 - archival

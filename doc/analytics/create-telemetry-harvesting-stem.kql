@@ -1,36 +1,48 @@
-.create external table HarvestingStem ( 
-      Operation:string,
-      EntityType:string,
-      State:string,
-      Version:int,
-      Timestamp:datetime,
-      Contract:string,
-      MachineId:string,
-      MachineNumber:int,
-      StemId:int,
-      StemNumber:int,
-      TreeKind:int,
-      BreastHeightDiameter:int,
-      BreastHeightDiameterClass:int,
-      Length:int,
-      Volume:real,
-      VolumeWithDecay:real,
-      TopVolume:real,
-      BarkFunction:string,
-      Longitude:real,
-      Latitude:real
-    ) 
-    kind=storage
-    // Volumes by day is low and excluded from partitioning
-    partition by (
-        contract:string,
-        year:int, 
-        month:int,
-        
-    )
-    pathformat=(contract=" contract "/year=" year "/month=" month ")
-    dataformat=multijson
-    (
-        h@'' 
-    )
-    with (namePrefix = "harvesting-stem") 
+.create external table HarvesterStemTelemetry (
+    ContractReference:string,
+    Year:int,
+    Month:int,
+
+    MachineKey:int,
+    StemKey:int,
+
+    CreationTimestamp:datetime,
+
+    ProductIdentification:string,
+    ProductName:string,
+
+    SpeciesGroupName:string,
+    StemTypeName:string,
+
+    LoggingOrganisationIdentification:string,
+    LoggingOrganisationName:string,
+
+    ProductDestinationIdentification:string,
+    ProductDestinationName:string,
+
+    ProcessingCategory:string,
+
+    Longitude:real,
+    Latitude:real,
+
+    BoomPositioningFellingAngle:int,
+    BoomPositioningLastLogCutAngle:int
+)
+kind=storage
+
+partition by (    
+    Year:int,
+    Month:int,
+    ContractReference:string
+)
+
+pathformat=(
+    "year=" Year
+    "/month=" Month
+    "/contractReference=" ContractReference
+)
+
+dataformat=parquet
+(
+    h@"https://poclake.dfs.core.windows.net/telemetries"
+)
