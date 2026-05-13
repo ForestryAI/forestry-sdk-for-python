@@ -44,5 +44,5 @@ pathformat=(
 
 dataformat=parquet
 (
-    h@"https://poclake.dfs.core.windows.net/telemetries"
+    h@"__STORAGE_URL__/telemetries;managed_identity=system"
 )
