@@ -1,23 +1,27 @@
 param location string
 
-param adxClusterName string
-param adxSkuCapacity int
-param adxSkuName string
-param adxSkuTier string
+param adxClusterConfiguration object
+param managedIdentityConfiguration object
 
-param adxDatabaseName string
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: managedIdentityConfiguration.name
+  location: location
+}
 
 resource adxCluster 'Microsoft.Kusto/clusters@2023-08-15' = {
-  name: adxClusterName
+  name: adxClusterConfiguration.name
   location: location
   sku: {
-    name: adxSkuName
-    tier: adxSkuTier
-    capacity: adxSkuCapacity
+    name: adxClusterConfiguration.sdk.name
+    tier: adxClusterConfiguration.sdk.tier
+    capacity: adxClusterConfiguration.sdk.capacity
   }
   identity: {
-    type: 'SystemAssigned'
-  }
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${managedIdentity.id}': {}
+    }
+}
   properties: {
     enableStreamingIngest: true
   }
@@ -25,7 +29,7 @@ resource adxCluster 'Microsoft.Kusto/clusters@2023-08-15' = {
 
 resource adxDatabase 'Microsoft.Kusto/clusters/databases@2023-08-15' = {
   parent: adxCluster
-  name: adxDatabaseName
+  name: adxClusterConfiguration.databaseName
   location: location
   kind: 'ReadWrite'
   properties: {
@@ -34,6 +38,25 @@ resource adxDatabase 'Microsoft.Kusto/clusters/databases@2023-08-15' = {
   }
 }
 
+resource clusterIdentity 'Microsoft.Kusto/clusters/principalAssignments@2023-08-15' = {
+  name: 'cluster-mi-assignment'
+  parent: adxCluster
+  properties: {
+    principalId: managedIdentity.properties.principalId
+    role: 'AllDatabasesAdmin'
+    tenantId: subscription().tenantId
+    principalType: 'App'
+  }
+}
+
+resource managedIdentityPolicy 'Microsoft.Kusto/clusters/databases/scripts@2023-08-15' = {
+  parent: adxDatabase
+  name: 'managed-identity-policy'
+  properties: {
+    scriptContent: '.alter-merge database ${adxClusterConfiguration.databaseName} policy managed_identity \'[{"ObjectId": "${managedIdentity.properties.principalId}", "AllowedUsages": "ExternalTable"}]\''
+    continueOnErrors: false
+  }
+}
+
 output adxClusterUri string = adxCluster.properties.uri
 output adxDatabase string = adxDatabase.name
-output principalId string = adxCluster.identity.principalId

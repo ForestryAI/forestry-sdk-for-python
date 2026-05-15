@@ -41,3 +41,22 @@ az deployment group create \
 ```
 
 from this directory.
+
+## Kusto extension
+The Azure CLI has extensions which can be listed by:
+```
+az extension list --output table
+```
+
+The Kusto extension is useful when needing to run KQL queries from the command line:
+```
+az extension add --name kusto
+```
+
+## ADX portal
+The ADX cluster has a portal:
+```
+https://adx-forestry-poc.swedencentral.kusto.windows.net
+```
+
+The user running the Bicep deployment needs to have super ADX access otherwise policies can not be created.

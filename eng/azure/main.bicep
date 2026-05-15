@@ -1,48 +1,62 @@
-param environment string
-param workload string
 param location string
 
-param storageSkuName string
+type AdxClusterConfiguration = {
+  sdk: {
+     name: string
+     tier: string
+     capacity: int
+  }
+  databaseName: string
+  name: string
+}
 
-param adxSkuCapacity int
-param adxSkuName string
-param adxSkuTier string
+type LakeStorageConfiguration = {
+  sdk: {
+    name: string
+  }
+  name: string
+}
 
-param adxDatabaseName string
+type ManagedIdentityConfiguration = {
+  name: string
+}
 
-var storageAccountName = 'st${workload}${environment}'
-var adxClusterName = 'adx-${workload}-${environment}'
+param adxClusterConfiguration AdxClusterConfiguration
+param lakeStorageConfiguration LakeStorageConfiguration
+param managedIdentityConfiguration  ManagedIdentityConfiguration
+
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: managedIdentityConfiguration.name
+  location: location
+}
 
 module adx './resources/adx/cluster.bicep' = {
   name: 'adx'
   params: {
     location: location
 
-    adxClusterName: adxClusterName
-    adxSkuCapacity: adxSkuCapacity
-    adxSkuName: adxSkuName
-    adxSkuTier: adxSkuTier
-
-    adxDatabaseName: adxDatabaseName
+    adxClusterConfiguration: adxClusterConfiguration
+    managedIdentityConfiguration: managedIdentityConfiguration
   }
 }
 
 module lake './resources/storage/lake.bicep' = {
   name: 'lake'
   params: {
-    storageAccountName: storageAccountName
     location: location
-    storageSkuName: storageSkuName
 
-    adxPrincipalId: adx.outputs.principalId
+    lakeStorageConfiguration: lakeStorageConfiguration
+    managedIdentityConfiguration: managedIdentityConfiguration
   }
 }
 
 module externalTables './resources/adx/tables.bicep' = {
-    name: 'externalTables'
-    params: {
-        storageUrl: lake.outputs.storageUrl
-        adxClusterName: adxClusterName
-        adxDatabaseName: adxDatabaseName
-    }
+  name: 'externalTables'
+  params: {
+    location: location
+    storageUrl: lake.outputs.storageUrl
+      
+    adxClusterConfiguration: adxClusterConfiguration
+    managedIdentityConfiguration: managedIdentityConfiguration
+  }
 }

@@ -1,13 +1,11 @@
-.create external table HarvesterLogTelemetry (
+.create-or-alter external table HarvesterLogTelemetry (
     ContractReference:string,
-    Year:int,
-    Month:int,
+    StartedTimestamp:datetime,
 
     MachineKey:int,
     StemKey:int,
     LogKey:int,
 
-    StartedTimestamp:datetime,
     CreationTimestamp:datetime,
 
     ProductIdentification:string,
@@ -29,12 +27,12 @@
     DiameterMiddleHKSOverBark:real,
     DiameterMiddleHKSUnderBark:real,
     DiameterTopOverBark:real,
-    DiameterTopUnderBark:real,
+    DiameterTopUnderBark:real
 )
 kind=storage
-partition by (ContractReference:string = ContractReference, Month:datetime = startofmonth(StartedTimestamp))
-pathformat=("contractReference=" ContractReference "/" Month) 
+partition by (ContractReference:string = ContractReference, StartOfMonth:datetime = startofmonth(StartedTimestamp))
+pathformat=("contractReference=" ContractReference "/" datetime_pattern("year='yyyy'/month='MM", StartOfMonth)) 
 dataformat=parquet
 (
-    h@"__STORAGE_URL__/telemetries;managed_identity=system"
+    h@"__STORAGE_URL__/telemetries;managed_identity=__UAMI_OBJECT_ID__"
 )

@@ -1,15 +1,18 @@
 param location string
 
-param storageAccountName string
-param storageSkuName string
+param lakeStorageConfiguration object
+param managedIdentityConfiguration object
 
-param adxPrincipalId string
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: managedIdentityConfiguration.name
+  location: location
+}
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
-  name: storageAccountName
+  name: lakeStorageConfiguration.name
   location: location
   sku: {
-    name: storageSkuName
+    name: lakeStorageConfiguration.sdk.name
   }
   kind: 'StorageV2'
   properties: {
@@ -26,24 +29,26 @@ resource telemetriesContainer 'Microsoft.Storage/storageAccounts/blobServices/co
   }
 }
 
+var blobReaderRoleId = subscriptionResourceId(
+  'Microsoft.Authorization/roleDefinitions',
+  '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'
+)
+
 resource storageBlobReaderRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(
     storageAccount.id,
-    adxPrincipalId,
-    'Storage Blob Data Reader'
+    managedIdentity.id,
+    blobReaderRoleId
   )
 
   scope: storageAccount
 
   properties: {
-    principalId: adxPrincipalId
-    roleDefinitionId: subscriptionResourceId(
-      'Microsoft.Authorization/roleDefinitions',
-      '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'
-    )
+    principalId: managedIdentity.properties.principalId
+    roleDefinitionId: blobReaderRoleId
     principalType: 'ServicePrincipal'
   }
 }
 
 output storageAccountName string = storageAccount.name
-output storageUrl string = 'https://${storageAccount.name}.${environment().suffixes.storage}/telemetries'
+output storageUrl string = storageAccount.properties.primaryEndpoints.blob
